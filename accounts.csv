@@ -1,0 +1,2 @@
+account_number, atm_pin, accountHolderName, amount, account_type(savings,current,joint)
+1151, 5151, Sanyam Mahajan, 215100, savings
