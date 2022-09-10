@@ -320,23 +320,74 @@ public:
     }
 
 
-    double withdrawl(){
-            double money;
-            int temppin;
-            cout<<"Enter account pin: ";
-            cin>>temppin;
-            if(cust.loginacc(cust.getaccnum(),temppin)){
-                int money;
-                cout<<"How much money do you want to withdraw?\n";
-                cin>>money;
-                cust-money;
-                Transationlog T(cust.getaccnum(),cust.getaccnum(),money,"Debted");
-                logTransation(T);
-            }else{
-                cout<<"Wrong pin\n";
+    void withdrawl(){
+                double money;
+                int temppin;
+                cout<<"Enter account pin: ";
+                cin>>temppin;
+                if(cust.loginacc(cust.getaccnum(),temppin)){
+                    int money;
+                    cout<<"How much money do you want to withdraw?\n";
+                    cin>>money;
+                    cust-money;
+                    Transationlog T(cust.getaccnum(),cust.getaccnum(),money,"Debted");
+                    logTransation(T);
+                }else{
+                    cout<<"Wrong pin\n";
+                }
+            
+    }
+    void depositfrom(){
+        int money;
+        int apin1;
+        double anum1;
+        double anum2;
+        cout<<"Enter Account number: ";
+        cin>>anum1;
+        cout<<"Enter account pin: ";
+        cin>>apin1;
+
+        cout<<"Enter the account number you want to deposit to ";
+        cin>>anum2;
+
+        
+            for(auto &i:accountsvector)
+            {
+                if(i.loginacc(anum1,apin1)){
+                 
+                    for(auto &j:accountsvector){
+                       if(!(j.getaccnum()==anum2)){
+                        cout<<"Sorry the account doesnot exist";
+                       }
+                       else{
+                            j+money;
+                            Transationlog T1(anum1,anum2,money,"Credited");
+                            Transationlog T2(anum2,anum1,money,"Debted");
+                            logTransation(T1);
+                            logTransation(T2);
+                       } 
+                    }
+                }
+                else
+                {
+                    cout<<"incorrect Atm pin or Account number\n";
+
+                }
             }
         
+        // if(cust.loginacc(accountnum,temppin)){
+        //     int money;
+        //     cout<<"How much money do you want to withdraw?\n";
+        //     cin>>money;
+        //     cust-money;
+        //     Transationlog T(cust.getaccnum(),cust.getaccnum(),money,"credited");
+        //     logTransation(T);
+        // }else{
+        //     cout<<"Wrong pin\n";
+        // }
     }
+
+
 
     void logTransation(Transationlog t){
         transationlogsvector.push_back(t);
@@ -421,7 +472,7 @@ int main()
 
     if(myBank.current_user==0){
     //customer operations
-    cout<<"To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo change pin ";
+    cout<<"To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo send money from one acconunt to another 'c'\nTo change pin 'p'\ndelete account 'd' ";
     char customeroperation;
         cin>>customeroperation;
         if(customeroperation=='b'|| customeroperation=='B'){
@@ -430,6 +481,9 @@ int main()
         else if(customeroperation=='w'|| customeroperation=='W'){
            myBank.withdrawl();
 
+        }
+        else if(customeroperation=='c'|| customeroperation=='C'){
+            myBank.depositfrom();
         }
         else if(customeroperation=='d' || customeroperation =='B'){
             myBank.deleteMyCustomer();
