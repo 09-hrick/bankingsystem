@@ -1,4 +1,4 @@
-account_number, atm_pin, accountHolderName, amount, account_type(savings,current,joint)
+account_number, atm_pin, accountHolderName, amount, account_type(savings/current/joint)
 1,1,sanyam,0,savings
 2,1235,fdgg,2323,current
 3,1333333,ds,200,savings
