@@ -321,7 +321,7 @@ public:
         vector<string> sepa;
         finout.open("accounts.csv",ios::out);
         finout.seekg(0,ios::beg);
-        finout<<"account_number, atm_pin, accountHolderName, amount, account_type(savings,current,joint)";
+        finout<<"account_number, atm_pin, accountHolderName, amount, account_type(savings/current/joint)";
         for(auto i:accountsvector){
             finout<<i.delAccounts().str();
         }
