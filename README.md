@@ -1,4 +1,4 @@
-# bankingsystem
+# BANKING SYSTEM
     Copyright © 2022 SANYAM MAHAJAN
     
      ____          _   _ _  _______ _   _  _____    _______     _______ _______ ______ __  __ 
