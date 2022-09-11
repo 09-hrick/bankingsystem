@@ -1,2 +1,11 @@
-AccountToBelogged, CreditedOrDebtedAccount, AmountTransfered, CreditedOrDebted (1,0)
-202044,2544,10,0
+AccountToBelogged, CreditedOrDebtedAccount, AmountTransfered, CreditedOrDebted
+202044,2544,10, Credited
+1,1,100,Debted
+1,1,100,Debted
+1,1,11,Debted
+1,1,1200,Debted
+1,1,100,Debted
+1,1,100,Debted
+3,1,100,Credited
+1,1,100,Debted
+3,1,100,Credited
