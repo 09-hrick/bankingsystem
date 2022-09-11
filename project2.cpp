@@ -452,6 +452,19 @@ public:
     
     }
    
+    void getaccountlogin(double anum){
+        for(auto &i:accountsvector){
+            if(i.getaccnum()==anum){
+                cust=i;
+                return;
+            }
+        }
+        cout<<"Account not found \n";
+        
+
+    }
+
+
     Employee getemployee(){
         return emp;
     }
@@ -553,9 +566,13 @@ int main()
         myBank.getemployee().display();
 
 
-        cout<<"To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo send money from one acconunt to another 'c'\nTo change pin 'p'\ndelete account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
+        cout<<"To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo view Transation log of an account 'T'\nTo change pin 'p'\ndelete account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
         char empoperation;
         cin>>empoperation;
+        double anum;
+        cout<<"Please enter accoun number: ";
+        cin>>anum;
+        myBank.getaccountlogin(anum);
         
         if(empoperation=='b'|| empoperation=='B'){
            
@@ -566,7 +583,7 @@ int main()
            myBank.withdrawl();
 
         }
-        else if(empoperation=='c'|| empoperation=='C'){
+        else if(empoperation=='T'|| empoperation=='T'){
             myBank.depositfrom();
         }
 
