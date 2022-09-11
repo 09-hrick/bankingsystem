@@ -51,11 +51,14 @@ class Transationlog{
         _AmountTransfered_= AmountTransfered;
         _CreditedOrDebted_= CreditedOrDebted;
     }
-    ostringstream giveTlog(){
-            ostringstream oss;
+    stringstream giveTlog(){
+            stringstream oss;
             //AccountToBelogged, CreditedOrDebtedAccount, AmountTransfered, CreditedOrDebted
             oss<<'\n'<<_AccountToBelogged_<<','<<_CreditedOrDebtedAccount_<<','<<_AmountTransfered_<<','<<_CreditedOrDebted_;
             return oss;
+    }
+    double getloggedAccount(){
+        return this->_AccountToBelogged_;
     }
    
 };
@@ -347,6 +350,54 @@ public:
     void showbalance(){
         cout<<"Your current balance is: "<<cust.whatismybalance()<<endl;
     }
+
+    void display_tlog(){
+    double anum=cust.getaccnum();
+    string ret_words[4];
+    string buf;
+    int x = 2; 
+    stringstream ss;
+
+    Accounts aacount = _getaccount(anum);
+        for(auto &i:transationlogsvector){
+            if(aacount.getaccnum()==i.getloggedAccount()){
+               ss=i.giveTlog();
+               ss>>ret_words[0];
+               ss>>ret_words[1];
+               ss>>ret_words[2];
+               ss>>ret_words[3];
+               //AccountToBelogged, CreditedOrDebtedAccount, AmountTransfered, CreditedOrDebted
+               cout<<ret_words[2]<<" has been "<<ret_words[3]<<" from/to your account";
+
+            }
+        }
+
+    }
+    void display_tlog(double anum){
+    string ret_words[4];
+    string buf;
+    int x = 2; 
+    stringstream ss;
+
+    Accounts aacount = _getaccount(anum);
+        for(auto &i:transationlogsvector){
+            if(aacount.getaccnum()==i.getloggedAccount()){
+               ss=i.giveTlog();
+               ss>>ret_words[0];
+               ss>>ret_words[1];
+               ss>>ret_words[2];
+               ss>>ret_words[3];
+               //AccountToBelogged, CreditedOrDebtedAccount, AmountTransfered, CreditedOrDebted
+               cout<<ret_words[2]<<" has been "<<ret_words[3]<<" from/to your account";
+
+            }
+        }
+
+
+       
+        
+        
+    }
     void withdrawl(){
                 int money;
                 int temppin;
@@ -382,7 +433,7 @@ public:
             cout<<"How much money do you want to deposit?\n";
             cin>>money;
             cust-money;
-            cout<<"Please enter the account number you want to deposit the moeny to: ";
+            cout<<"Please enter the account number you want to deposit the money to: ";
             cin>>anum;
             
             
@@ -460,7 +511,7 @@ public:
             }
         }
         cout<<"Account not found \n";
-        
+
 
     }
 
@@ -472,23 +523,21 @@ public:
         //cust
         cout<<"Are you sure you want to delete your account\n";
         char c;
-        
-       
-            cout<<"Press 'y' and hit enter to confirm";
-            cin>>c;
-            if(c=='y'||c=='Y'){
-                cout<<"Account deleted successfully\n";
+        cout<<"Press 'y' and hit enter to confirm";
+        cin>>c;
+        if(c=='y'||c=='Y'){
+            cout<<"Account deleted successfully\n";
 
-                vector<int>::iterator index;
-                for(vector<Accounts>::iterator i=accountsvector.begin(); i != accountsvector.end(); i++){
-                   if(cust==*i){
-                    accountsvector.erase(i);
-                   }
+            vector<int>::iterator index;
+            for(vector<Accounts>::iterator i=accountsvector.begin(); i != accountsvector.end(); i++){
+                if(cust==*i){
+                accountsvector.erase(i);
                 }
             }
-            else{
-                cout<<"Account termination obstructed\n";
-            }
+        }
+        else{
+            cout<<"Account termination obstructed\n";
+        }
     }
 
 
@@ -541,10 +590,16 @@ int main()
 
         }
 
+        else if(customeroperation=='t' || customeroperation =='T'){
+         myBank.display_tlog();
+         
+        }
+
         else if(customeroperation=='d' || customeroperation =='D'){
             myBank.deleteMyCustomer();
             break;
         }
+        
         else if(customeroperation=='l'|| customeroperation=='L'){
             cout<<"logout sucessfully";
             goto logout;
@@ -566,7 +621,7 @@ int main()
         myBank.getemployee().display();
 
 
-        cout<<"To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo view Transation log of an account 'T'\nTo change pin 'p'\ndelete account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
+        cout<<"To display balance press 'b'\nTo view Transation log of an account 't'\ndelete customer account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
         char empoperation;
         cin>>empoperation;
         double anum;
@@ -579,18 +634,9 @@ int main()
             myBank.showbalance();
            
         }
-        else if(empoperation=='w'|| empoperation=='W'){
-           myBank.withdrawl();
-
-        }
+       
         else if(empoperation=='T'|| empoperation=='T'){
-            myBank.depositfrom();
-        }
-
-        else if(empoperation=='p'|| empoperation=='P'){
-            // change pin
-            myBank.changePin();
-
+            myBank.display_tlog(anum);
         }
 
         else if(empoperation=='d' || empoperation =='D'){
