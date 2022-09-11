@@ -22,7 +22,6 @@ class Employee{
         _employeePas_=ep;
     }
     void display(){
-        cout<<"Hello\n";
         cout<<_employeeName_<<endl;
     }
     bool loginemp(double empId,string emppin){
@@ -95,6 +94,9 @@ public:
             cin>>_amount_;
 
     }
+    void display(){
+        cout<<this->_accountHolderName_;
+    }
     Accounts(double account_number, int atm_pin,string accountHolderName,double amount,string  account_type)
     {
 
@@ -105,6 +107,7 @@ public:
         _account_type_ = account_type;
     }
     double whatismybalance(){
+        // const double &i=_amount_;
         return _amount_;
     }
     
@@ -112,17 +115,23 @@ public:
         return( (this->_account_number_==obj._account_number_ )&&(this->_account_type_==obj._account_type_)&&(this->_accountHolderName_==obj._accountHolderName_)&&(this->_amount_==obj._amount_)&&(this->_atm_pin_ == obj._atm_pin_ ) );
     }
     void operator+(Accounts const &obj){
-        this->_amount_+obj._amount_;
+        this->_amount_+=obj._amount_;
     }
     void operator+(double const &obj){
-        this->_amount_+obj;
+        this->_amount_+=obj;
     }
 
     void operator-(Accounts const &obj){
-        this->_amount_-obj._amount_;
+        this->_amount_-=obj._amount_;
     }
-    void operator-(double const &obj){
-        this->_amount_-obj;
+    void operator-(int const &obj){
+        this->_amount_-=obj;
+    }
+    void Setpin(int apin1,int apin2){
+        if(this->_atm_pin_==apin1){
+            this->_atm_pin_=apin2;
+        }
+
     }
 
 
@@ -168,6 +177,20 @@ class Bank :private Accounts,private Transationlog,private Employee
 private:
     Accounts cust;
     Employee emp;
+
+    Accounts _getaccount(double anum)
+    {  
+        Accounts a;
+        for(auto &i:accountsvector){
+            if(i.getaccnum()==anum){
+                return i;
+            }
+            else{continue;}
+        }cout<<"Account not Found\n";
+        return a;
+
+
+    }
     void logincust(){
          double anum;int apin;
             cout<<"Entering Customer login portal\n";
@@ -177,6 +200,7 @@ private:
 
             if(getchary=='y' || getchary=='Y')
             {
+               
                 cout<<"Please enter account number: ";
                 cin>>anum;
                 cout<<"Please enter atm pin: ";
@@ -186,14 +210,12 @@ private:
                         if(i.loginacc(anum,apin)){
                         cust=i;
                         cout<<"login sucessful\n";
-
+                        return;
                         }
-                        else
-                        {
-                            cout<<"incorrect Atm pin or Account number\n";
-
-                        }
-                }
+                        
+                }cout<<"incorrect Atm pin or Account number\n";
+                logincust();
+                
                 
             }
         else{
@@ -221,13 +243,16 @@ private:
                 if(i.loginemp(empid,emppass)){
                     emp=i;
                     cout<<"login sucessful\n";
-                }else{
-                     cout<<"Incorrect password or employee ID\n";
+                    cout<<"Welcome customer ";
+                    cust.display();
+                    return;
                 }
-        }
+        }cout<<"Incorrect password or employee ID\n";
+        loginemp();
        
 
     }
+
 
 public:
     vector <Accounts> accountsvector;
@@ -319,9 +344,11 @@ public:
 
     }
 
-
+    void showbalance(){
+        cout<<"Your current balance is: "<<cust.whatismybalance()<<endl;
+    }
     void withdrawl(){
-                double money;
+                int money;
                 int temppin;
                 cout<<"Enter account pin: ";
                 cin>>temppin;
@@ -332,61 +359,67 @@ public:
                     cust-money;
                     Transationlog T(cust.getaccnum(),cust.getaccnum(),money,"Debted");
                     logTransation(T);
-                }else{
+                    for(auto &i:accountsvector){
+                        if(i.loginacc(cust.getaccnum(),temppin)){
+                            i-money;
+                        }
+                    }
+                }  
+                else{
                     cout<<"Wrong pin\n";
                 }
             
     }
+
     void depositfrom(){
         int money;
-        int apin1;
-        double anum1;
-        double anum2;
-        cout<<"Enter Account number: ";
-        cin>>anum1;
+        int temppin;
         cout<<"Enter account pin: ";
-        cin>>apin1;
-
-        cout<<"Enter the account number you want to deposit to ";
-        cin>>anum2;
-
-        
-            for(auto &i:accountsvector)
-            {
-                if(i.loginacc(anum1,apin1)){
-                 
-                    for(auto &j:accountsvector){
-                       if(!(j.getaccnum()==anum2)){
-                        cout<<"Sorry the account doesnot exist";
-                       }
-                       else{
-                            j+money;
-                            Transationlog T1(anum1,anum2,money,"Credited");
-                            Transationlog T2(anum2,anum1,money,"Debted");
-                            logTransation(T1);
-                            logTransation(T2);
-                       } 
-                    }
+        cin>>temppin;
+        if(cust.loginacc(cust.getaccnum(),temppin)){
+            int money;
+            double anum;
+            cout<<"How much money do you want to deposit?\n";
+            cin>>money;
+            cust-money;
+            cout<<"Please enter the account number you want to deposit the moeny to: ";
+            cin>>anum;
+            
+            
+            for(auto &i:accountsvector){
+                if(i.loginacc(cust.getaccnum(),temppin)){
+                    i-money;
+                    Transationlog T(cust.getaccnum(),cust.getaccnum(),money,"Debted");
+                    logTransation(T);
                 }
-                else
-                {
-                    cout<<"incorrect Atm pin or Account number\n";
-
-                }
+                else{continue;}
             }
-        
-        // if(cust.loginacc(accountnum,temppin)){
-        //     int money;
-        //     cout<<"How much money do you want to withdraw?\n";
-        //     cin>>money;
-        //     cust-money;
-        //     Transationlog T(cust.getaccnum(),cust.getaccnum(),money,"credited");
-        //     logTransation(T);
-        // }else{
-        //     cout<<"Wrong pin\n";
-        // }
-    }
 
+            for(auto &i:accountsvector){
+                if(i==_getaccount(anum)){
+                    i+money;
+                    Transationlog T(anum,cust.getaccnum(),money,"Credited");
+                    logTransation(T);
+                }else{continue;}
+            }return;
+               
+        }  
+        else{
+            cout<<"Wrong pin\n";
+        }
+    }
+    void changePin(){
+        int temppin;
+        cout<<"Enter Your current account pin: ";
+        cin>>temppin;
+        if(cust.loginacc(cust.getaccnum(),temppin)){
+            int newpin;
+            cout<<"Please enter new pin number: ";
+            cust.Setpin(temppin,newpin);
+        }
+
+        
+    }
 
 
     void logTransation(Transationlog t){
@@ -417,12 +450,8 @@ public:
     }
     }
     
-
-    
     }
-    Accounts getAccount(){
-        return cust;
-    }
+   
     Employee getemployee(){
         return emp;
     }
@@ -454,6 +483,9 @@ public:
 };
 
 
+
+
+
 int main()
 {
     //declaration
@@ -472,11 +504,15 @@ int main()
 
     if(myBank.current_user==0){
     //customer operations
-    cout<<"To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo send money from one acconunt to another 'c'\nTo change pin 'p'\ndelete account 'd' ";
-    char customeroperation;
+    
+    cout<<"To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo send money from one acconunt to another 'c'\nTo change pin 'p'\ndelete account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
+        char customeroperation;
         cin>>customeroperation;
+        
         if(customeroperation=='b'|| customeroperation=='B'){
-            cout<<"Your current balance is: "<<myBank.getAccount().whatismybalance()<<endl;
+           
+            myBank.showbalance();
+           
         }
         else if(customeroperation=='w'|| customeroperation=='W'){
            myBank.withdrawl();
@@ -485,11 +521,27 @@ int main()
         else if(customeroperation=='c'|| customeroperation=='C'){
             myBank.depositfrom();
         }
-        else if(customeroperation=='d' || customeroperation =='B'){
+
+        else if(customeroperation=='p'|| customeroperation=='P'){
+            // change pin
+            myBank.changePin();
+
+        }
+
+        else if(customeroperation=='d' || customeroperation =='D'){
             myBank.deleteMyCustomer();
-            cout<<"Thanks for choosing our services\n";
             break;
-        }else{continue;}
+        }
+        else if(customeroperation=='l'|| customeroperation=='L'){
+            cout<<"logout sucessfully";
+            goto logout;
+        }
+        else if(customeroperation=='e'|| customeroperation=='e'){
+            break;
+        }
+
+        
+        else{continue;}
         
     }
     
@@ -497,12 +549,70 @@ int main()
     
     else{
         //employee operations
+        cout<<"Welcome employee ";
+        myBank.getemployee().display();
+
+
+        cout<<"To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo send money from one acconunt to another 'c'\nTo change pin 'p'\ndelete account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
+        char empoperation;
+        cin>>empoperation;
+        
+        if(empoperation=='b'|| empoperation=='B'){
+           
+            myBank.showbalance();
+           
+        }
+        else if(empoperation=='w'|| empoperation=='W'){
+           myBank.withdrawl();
+
+        }
+        else if(empoperation=='c'|| empoperation=='C'){
+            myBank.depositfrom();
+        }
+
+        else if(empoperation=='p'|| empoperation=='P'){
+            // change pin
+            myBank.changePin();
+
+        }
+
+        else if(empoperation=='d' || empoperation =='D'){
+            myBank.deleteMyCustomer();
+            break;
+        }
+        else if(empoperation=='l'|| empoperation=='L'){
+            cout<<"logout sucessfully";
+            goto logout;
+        }
+        else if(empoperation=='e'|| empoperation=='e'){
+            break;
+        }
+
+        
+        else{continue;}
+
 
     }
+    logout:
+    cout<<"Do you want to continue Browsing the bank press Y for yes and any key for No: "; 
 
-    cout<<"Do you want to continue Browsing the bank press 0 for yes and 1 for No: ";
-    cin>>exit;
+    
+    //only continue if and only if the input is Y 
+    char* a=NULL;
+    cin>>a[0];
+    
+    if(a[0]=='Y'||a[0]=='y'){
+        exit=false;
+    }
+    
+    else{
+            exit=true;
+    }
+    
+    
+    
     } while (!exit);
+    cout<<"Thanks for choosing our services\n";
 
 
 
