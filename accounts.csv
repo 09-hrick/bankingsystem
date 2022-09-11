@@ -7,3 +7,4 @@ account_number, atm_pin, accountHolderName, amount, account_type(savings/current
 6,0,0,0,current
 7,1234,ssd,111,savings
 8,1,3232,1,savings
+9,1,1,1,savings

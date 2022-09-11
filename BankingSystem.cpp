@@ -1,7 +1,22 @@
 /*
+    Copyright © 2022 SANYAM MAHAJAN
 
-    "To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo send money from one acconunt to another 'c'\nTo change pin 'p'\ndelete account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
-    "To display balance press 'b'\nTo view Transation log of an account 't'\ndelete customer account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
+    This is a banking system Which ask the user if he/she is 
+    an employee or customer of the bank and prompts login accordingly 
+    
+    Customer can perform the following:
+        • Display balance
+        • Withdraw money from the account
+        • Send money from one acconunt to another 
+        • View transation log
+        • Change pin of account
+        • Delete account 
+
+    Employee can perform the following:
+        • Display balance of the inputed account
+        • View Transation log of an account
+        • Delete customer account
+
 */
 
 
@@ -655,7 +670,15 @@ int main()
         //customer operations   
         while(true){
         cout<<string(20,'>')<<string(20,'<')<<endl;
-        cout<<"To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo send money from one acconunt to another 'c'\nTo change pin 'p'\ndelete account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
+        cout<<
+        "To display balance press 'b'\n"<<
+        "To withdraw money from the account press 'w'\n"<<
+        "To send money from one acconunt to another 'c'\n"<<
+        "To change pin 'p'\n"<<
+        "To delete account press 'd'\n"<<
+        "To view transation log press 't'\n"<<
+        "To logout press 'L'\n"<<
+        "To Exit the bank Press 'e'\n";
         cout<<string(20,'>')<<string(20,'<')<<endl;
         
         char customeroperation;
@@ -716,7 +739,12 @@ int main()
         //keeps promting the user emloyee to do operations untill or unless exited by the promt 
         while(true){
         cout<<string(20,'>')<<string(20,'<')<<endl;
-        cout<<"To display balance press 'b'\nTo view Transation log of an account 't'\ndelete customer account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
+        cout<<
+        "To display balance press 'b'\n"<<
+        "To view Transation log of an account 't'\n"<<
+        "To delete customer account 'd'\n"<<
+        "To logout press 'L'\n"<<
+        "To Exit the bank Press 'e'\n";
         cout<<string(20,'>')<<string(20,'<')<<endl;
         
         char empoperation;
@@ -782,3 +810,12 @@ int main()
     cout<<"Thanks for choosing our services\n";
     return 0;
 }
+
+/*
+
+    THIS SOFTWARE IS PROVIDED "AS IT IS" WITHOUT ANY WARRANTY OF ANYKIND
+    AND IS NOT FIT/OPTIMIZED FOR COMMERCIAL USE
+    THE DEVELOPER i.e. SANYAM MAHAJAN IS NOT LIABLE FOR ANY MISSUSE OR ANY DAMAGE CAUSED BY THE SAME
+
+    Copyright © 2022 Sanyam Mahajan
+*/
