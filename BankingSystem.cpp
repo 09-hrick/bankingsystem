@@ -311,10 +311,6 @@ public:
 
     }
     
-    
-
-
-   
     ~Bank(){
 
         fstream finout;
@@ -353,43 +349,45 @@ public:
 
     void display_tlog(){
     double anum=cust.getaccnum();
-    string ret_words[4];
+    vector<string> ret_words;
     string buf;
     int x = 2; 
     stringstream ss;
 
     Accounts aacount = _getaccount(anum);
+    cout<<"Printing account statement of account number "<<aacount.getaccnum()<<endl;
         for(auto &i:transationlogsvector){
+            
             if(aacount.getaccnum()==i.getloggedAccount()){
-               ss=i.giveTlog();
-               ss>>ret_words[0];
-               ss>>ret_words[1];
-               ss>>ret_words[2];
-               ss>>ret_words[3];
+                string temp;
+                ss=i.giveTlog();
+                 while(getline(ss, temp, ',')) { 
+                    ret_words.push_back(temp); 
+                } 
                //AccountToBelogged, CreditedOrDebtedAccount, AmountTransfered, CreditedOrDebted
-               cout<<ret_words[2]<<" has been "<<ret_words[3]<<" from/to your account";
-
+               cout<<ret_words[2]<<" has been "<<ret_words[3]<<" from/to your account to/from Account number "<< ret_words[1]<<endl;
             }
         }
 
     }
     void display_tlog(double anum){
-    string ret_words[4];
+    vector<string> ret_words;
     string buf;
     int x = 2; 
     stringstream ss;
 
     Accounts aacount = _getaccount(anum);
+    cout<<"Printing account statement of account number "<<aacount.getaccnum()<<endl;
         for(auto &i:transationlogsvector){
+            
             if(aacount.getaccnum()==i.getloggedAccount()){
-               ss=i.giveTlog();
-               ss>>ret_words[0];
-               ss>>ret_words[1];
-               ss>>ret_words[2];
-               ss>>ret_words[3];
+                string temp;
+                ss=i.giveTlog();
+                 while(getline(ss, temp, ',')) { 
+                    ret_words.push_back(temp); 
+                } 
                //AccountToBelogged, CreditedOrDebtedAccount, AmountTransfered, CreditedOrDebted
-               cout<<ret_words[2]<<" has been "<<ret_words[3]<<" from/to your account";
-
+               cout<<ret_words[2]<<" has been "<<ret_words[3]<<" from/to your account to/from Account number "<< ret_words[1]<<endl;
             }
         }
 
@@ -567,12 +565,12 @@ int main()
     if(myBank.current_user==0){
     //customer operations
     
-    cout<<"To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo send money from one acconunt to another 'c'\nTo change pin 'p'\ndelete account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
+   
+        while(true){
+        cout<<"To display balance press 'b'\nTo withdraw money from the account press 'w'\nTo send money from one acconunt to another 'c'\nTo change pin 'p'\ndelete account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
         char customeroperation;
         cin>>customeroperation;
-        
         if(customeroperation=='b'|| customeroperation=='B'){
-           
             myBank.showbalance();
            
         }
@@ -610,6 +608,7 @@ int main()
 
         
         else{continue;}
+        }
         
     }
     
@@ -620,31 +619,36 @@ int main()
         cout<<"Welcome employee ";
         myBank.getemployee().display();
 
-
+        while(true){
         cout<<"To display balance press 'b'\nTo view Transation log of an account 't'\ndelete customer account 'd'\nTo logout press 'L'\nTo Exit the bank Press 'e'\n";
         char empoperation;
         cin>>empoperation;
         double anum;
-        cout<<"Please enter accoun number: ";
-        cin>>anum;
-        myBank.getaccountlogin(anum);
+        
         
         if(empoperation=='b'|| empoperation=='B'){
-           
+            cout<<"Please enter account number: ";
+            cin>>anum;
+            myBank.getaccountlogin(anum);
             myBank.showbalance();
            
         }
        
-        else if(empoperation=='T'|| empoperation=='T'){
+        else if(empoperation=='T'|| empoperation=='t'){
+            cout<<"Please enter account number: ";
+            cin>>anum;
+            myBank.getaccountlogin(anum);
             myBank.display_tlog(anum);
         }
 
         else if(empoperation=='d' || empoperation =='D'){
+            cout<<"Please enter account number: ";
+            cin>>anum;
+            myBank.getaccountlogin(anum);
             myBank.deleteMyCustomer();
             break;
         }
         else if(empoperation=='l'|| empoperation=='L'){
-            cout<<"logout sucessfully";
             goto logout;
         }
         else if(empoperation=='e'|| empoperation=='e'){
@@ -653,6 +657,7 @@ int main()
 
         
         else{continue;}
+        }
 
 
     }
