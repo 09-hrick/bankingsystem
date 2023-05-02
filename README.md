@@ -4,7 +4,7 @@
     | |_) | /  \  |  \| | ' /  | | |  \| | |  __  | (___  \ \_/ / (___    | |  | |__  | \  / |
     |  _ < / /\ \ | . ` |  <   | | | . ` | | |_ |  \___ \  \   / \___ \   | |  |  __| | |\/| |
     | |_) / ____ \| |\  | . \ _| |_| |\  | |__| |  ____) |  | |  ____) |  | |  | |____| |  | |
-    |____/_/    \_\_| \_|_|\_\_____|_| \_|\_____| |_____/   |_| |_____/   |_|  |______|_|  |_|                                                                           
+    |____/_/    \_\_| \_|_|\_\_____|_| \_|\_____| |_____/   |_| |_____/   |_|  |______|_|  |_|                                                      
 
 <!--    This is a banking system Which ask the user if he/she is 
     an employee or customer of the bank and prompts login accordingly 
@@ -31,7 +31,7 @@
 --> 
 # Banking System
 
-![Banner](https://i.imgur.com/rmQ2Kno.png)
+<!-- ![Banner](https://i.imgur.com/rmQ2Kno.png) -->
 
 This is a simple banking system that prompts the user to log in as an employee or customer of the bank, and provides appropriate functionality for each role.
 
@@ -51,7 +51,7 @@ This is a simple banking system that prompts the user to log in as an employee o
 ## Disclaimer
 This software is provided "as is" without any warranty of any kind and is not fit or optimized for commercial use. The developer, Sanyam Mahajan, is not liable for any misuse or any damage caused by the software.
 
-## License
-This software is released under the [MIT License](https://opensource.org/licenses/MIT).
+<!-- ## License
+This software is released under the [MIT License](https://opensource.org/licenses/MIT). -->
 
 © 2022 Sanyam Mahajan. All rights reserved.
